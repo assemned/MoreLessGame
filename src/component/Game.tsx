@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BestScores from "./BestScores";
+import { FormEvent } from "react";
 
 interface Props {
   userName: string;
@@ -26,17 +27,18 @@ function Game(props: Props) {
 
   const compareNumber = () => {
     if (parseInt(guessNumber) > 100 || parseInt(guessNumber) < 0) {
-      setComparisonResult("Enter a number between 0 - 100");
+      setComparisonResult("Enter a number between 0 - 100"), setGuessNumber("");
     } else if (randomNumber > parseInt(guessNumber)) {
-      setComparisonResult("More"), setScore(score + 1);
+      setComparisonResult("More"), setScore(score + 1), setGuessNumber("");
     } else if (randomNumber < parseInt(guessNumber)) {
-      setComparisonResult("Less"), setScore(score + 1);
+      setComparisonResult("Less"), setScore(score + 1), setGuessNumber("");
     } else if (randomNumber === parseInt(guessNumber)) {
       setScore(score + 1), setIsHiddenStart(true), setIsHiddenReset(false);
       setComparisonResult("Exactly! You did it in " + (score + 1) + " shoot!"),
-        addBestScore(props.userName, score + 1);
+        addBestScore(props.userName, score + 1),
+        setGuessNumber("");
     } else {
-      setComparisonResult("Enter a Valid Number!");
+      setComparisonResult("Enter a Valid Number!"), setGuessNumber("");
     }
   };
 
@@ -62,30 +64,50 @@ function Game(props: Props) {
     saveScoresToLocalStorage(top5Scores);
   };
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <>
-      <div>
-        <h1>Game</h1>
-        <label htmlFor="guess">Guess The Number between 0 - 100</label>
-        <br />
-        <input
-          type="number"
-          id="guess"
-          value={guessNumber}
-          onChange={(e) => setGuessNumber(e.target.value)}
-        />
-        <br />
-        <button onClick={compareNumber} hidden={isHiddenStart}>
-          Submit
-        </button>
-        <button onClick={Reset} hidden={isHiddenReset}>
-          Play Again
-        </button>
-        {comparisonResult && <p>{comparisonResult}</p>}
-        <br />
-        <p hidden={isHiddenStart}>Score: {score}</p>
+      <div className="background text-center bg-dark-subtle text-emphasis-dark">
+        <h1>
+          <strong>Guess The Number Game</strong>
+        </h1>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="guess">
+            Guess The Number between <br /> <strong>0 - 100</strong>
+          </label>
+          <br />
+          <input
+            type="text"
+            id="guess"
+            autoComplete="off"
+            className="form-control text-dark border-dark m-1"
+            value={guessNumber}
+            onChange={(e) => setGuessNumber(e.target.value)}
+          />
+          <button
+            className="btn btn-dark btn-m  m-1"
+            type="submit"
+            onClick={compareNumber}
+            hidden={isHiddenStart}
+          >
+            Submit
+          </button>
+          <button
+            className="btn btn-dark  btn-m  m-1"
+            onClick={Reset}
+            hidden={isHiddenReset}
+          >
+            Play Again
+          </button>
+          {comparisonResult && <p className="m-1">{comparisonResult}</p>}
+          <br />
+          <p hidden={isHiddenStart}>Score: {score}</p>
+        </form>
+        <BestScores bestScores={bestScores} />
       </div>
-      <BestScores bestScores={bestScores} />
     </>
   );
 }

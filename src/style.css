@@ -1,0 +1,16 @@
+.background {
+    min-height: 100vh;
+    padding: 5% 40%;
+}
+
+@media (max-width:1300px) {
+    .background {
+        padding: 7% 30%;
+    }  
+}
+
+@media (max-width:500px) {
+    .background {
+        padding: 10% 15%;
+    }  
+}

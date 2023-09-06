@@ -8,19 +8,21 @@ function BestScores({ bestScores }: { bestScores: any[] }) {
 
   return (
     <>
-      <button onClick={handleClick}>Best Scores</button>
+      <button className="btn btn-outline-dark btn-sm m-3" onClick={handleClick}>
+        Best Scores
+      </button>
       <div hidden={isHidden}>
-        <h2>The Best Scores</h2>
+        <h3>
+          <strong>The Best Scores</strong>
+        </h3>
         <ul className="list-group">
           {bestScores.map((score: any, index: number) => (
             <li
               key={index}
-              className="list-group-item d-flex justify-content-between align-items-center"
+              className="list-group-item list-group-item-light d-flex justify-content-between align-items-center fw-semibold"
             >
               {score.name}
-              <span className="badge bg-primary rounded-pill">
-                {score.score}
-              </span>
+              <span className="badge bg-dark rounded-pill">{score.score}</span>
             </li>
           ))}
         </ul>

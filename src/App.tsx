@@ -28,19 +28,26 @@ function App() {
       {isGameStarted ? (
         <Game userName={userName} />
       ) : (
-        <div>
+        <div className="background text-center bg-dark-subtle text-emphasis-dark">
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              minLength={3}
-              required
-              pattern="[A-Za-z]+"
-              placeholder="Enter Your Name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
+            <label htmlFor="name">
+              <input
+                type="text"
+                minLength={3}
+                id="name"
+                autoComplete="on"
+                required
+                className="form-control border-dark m-1"
+                pattern="[A-Za-z]+"
+                placeholder="Enter Your Name"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </label>
             <br />
-            <button type="submit">PLAY</button>
+            <button className="btn btn-dark  btn-lg m-1 px-5" type="submit">
+              PLAY
+            </button>
             <br />
           </form>
           <BestScores bestScores={bestScores} />

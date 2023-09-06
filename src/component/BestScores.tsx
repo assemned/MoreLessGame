@@ -2,6 +2,12 @@ import { useState } from "react";
 
 function BestScores({ bestScores }: { bestScores: any[] }) {
   const [isHidden, setIsHidden] = useState(true);
+  const YesNoScores = () => {
+    if (bestScores.length === 0) {
+      return <p>Play at least One Game.</p>;
+    }
+  };
+
   const handleClick = () => {
     setIsHidden(!isHidden);
   };
@@ -15,6 +21,7 @@ function BestScores({ bestScores }: { bestScores: any[] }) {
         <h3>
           <strong>The Best Scores</strong>
         </h3>
+        {YesNoScores()}
         <ul className="list-group">
           {bestScores.map((score: any, index: number) => (
             <li
